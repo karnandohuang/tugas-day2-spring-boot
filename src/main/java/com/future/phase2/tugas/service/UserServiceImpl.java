@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User saveUser(User user) {
-        String validUser = "";
+    public String saveUser(User user) {
+        String validUser = null;
         if(user.getUsername() == null){
             validUser = "Username is empty";
         } else if(user.getName() == null){
@@ -34,10 +34,10 @@ public class UserServiceImpl implements UserService{
             validUser = "Password is empty";
         }
 
-        if(validUser.equals(""))
+        if(validUser == null)
             userRepository.save(user);
 
-        return user;
+        return validUser;
     }
 
     @Override
