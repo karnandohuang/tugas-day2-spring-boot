@@ -37,7 +37,7 @@ public class UserController {
         users.setUsername(request.getUsername());
         users.setName(request.getName());
         users.setPassword(encoder.encode(request.getPassword()));
-        users.setRole("MEMBER");
+        users.setRole("ROLE_MEMBER");
 
         if(userService.saveUser(users) == null)
             return "Insert Success";
