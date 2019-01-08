@@ -1,6 +1,6 @@
 package com.future.phase2.tugas.service;
 
-import com.future.phase2.tugas.model.User;
+import com.future.phase2.tugas.model.Users;
 import com.future.phase2.tugas.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,37 +14,37 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public List<User> getUserList() {
+    public List<Users> getUserList() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getUser(String username) {
+    public Users getUser(String username) {
         return userRepository.findOne(username);
     }
 
     @Override
-    public String saveUser(User user) {
+    public String saveUser(Users users) {
         String validUser = null;
-        if(user.getUsername() == null){
+        if(users.getUsername() == null){
             validUser = "Username is empty";
-        } else if(user.getName() == null){
+        } else if(users.getName() == null){
             validUser = "Name is empty";
-        } else if(user.getPassword() == null) {
+        } else if(users.getPassword() == null) {
             validUser = "Password is empty";
         }
 
         if(validUser == null)
-            userRepository.save(user);
+            userRepository.save(users);
 
         return validUser;
     }
 
     @Override
-    public User deleteUser(String username) {
-        User deleteUser = userRepository.findOne(username);
-        userRepository.delete(deleteUser);
-        return deleteUser;
+    public Users deleteUser(String username) {
+        Users deleteUsers = userRepository.findOne(username);
+        userRepository.delete(deleteUsers);
+        return deleteUsers;
     }
 
 

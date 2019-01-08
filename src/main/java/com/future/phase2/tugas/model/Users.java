@@ -8,12 +8,11 @@ import java.io.Serializable;
 
 @Data
 @Document(collection = "user")
-public class User implements Serializable {
+public class Users implements Serializable {
 
     @Id
     protected String username;
     protected String password;
     protected String name;
     protected String role;
-
 }

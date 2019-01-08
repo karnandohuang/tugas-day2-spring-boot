@@ -1,6 +1,6 @@
 package com.future.phase2.tugas.controller;
 
-import com.future.phase2.tugas.model.User;
+import com.future.phase2.tugas.model.Users;
 import com.future.phase2.tugas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -20,27 +19,27 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "users/list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> listOfUser(){
+    public List<Users> listOfUser(){
         return userService.getUserList();
     }
 
     @Cacheable(key = "#username", value = "user")
     @GetMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User findUser(@PathVariable("username") String username){
+    public Users findUser(@PathVariable("username") String username){
         return userService.getUser(username);
     }
 
     @PostMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String saveUser(@RequestBody User request){
+    public String saveUser(@RequestBody Users request){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setName(request.getName());
-        user.setPassword(encoder.encode(request.getPassword()));
-        user.setRole("MEMBER");
+        Users users = new Users();
+        users.setUsername(request.getUsername());
+        users.setName(request.getName());
+        users.setPassword(encoder.encode(request.getPassword()));
+        users.setRole("MEMBER");
 
-        if(userService.saveUser(user) == null)
+        if(userService.saveUser(users) == null)
             return "Insert Success";
 
         return "Save Failed";
@@ -48,21 +47,21 @@ public class UserController {
 
     @CacheEvict(key = "#request.getUsername()", value = "user")
     @PutMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String editUser(@RequestBody User request){
+    public String editUser(@RequestBody Users request){
         try{
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-            User savedUser = userService.getUser(request.getUsername());
-            if(savedUser == null)
+            Users savedUsers = userService.getUser(request.getUsername());
+            if(savedUsers == null)
                 return "Username not found";
 
-            savedUser.setName(request.getName());
-            savedUser.setPassword(encoder.encode(request.getPassword()));
+            savedUsers.setName(request.getName());
+            savedUsers.setPassword(encoder.encode(request.getPassword()));
 
-            if(userService.saveUser(savedUser) == null)
+            if(userService.saveUser(savedUsers) == null)
                 return "Edit success";
 
-        } catch (RuntimeException e){
+        } catch (RuntimeException ignored){
 
         }
 
@@ -72,6 +71,6 @@ public class UserController {
     @DeleteMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteUser(@PathVariable("username") String username) {
         userService.deleteUser(username);
-        return "User deleted";
+        return "Users deleted";
     }
 }
