@@ -65,4 +65,10 @@ public class UserController {
 
         return null;
     }
+
+    @DeleteMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String deleteUser(@PathVariable("username") String username) {
+        userService.deleteUser(username);
+        return "User deleted";
+    }
 }
