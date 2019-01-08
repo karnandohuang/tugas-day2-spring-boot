@@ -29,7 +29,7 @@ public class UserController {
         return userService.getUser(username);
     }
 
-    @PostMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "admin/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String saveUser(@RequestBody Users request){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @CacheEvict(key = "#request.getUsername()", value = "user")
-    @PutMapping(value = "users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "admin/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String editUser(@RequestBody Users request){
         try{
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -68,7 +68,7 @@ public class UserController {
         return "Edit failed";
     }
 
-    @DeleteMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "admin/users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteUser(@PathVariable("username") String username) {
         userService.deleteUser(username);
         return "Users deleted";
