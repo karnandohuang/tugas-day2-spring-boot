@@ -1,8 +1,9 @@
 package com.future.phase2.tugas.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class LoginController {
 
     @GetMapping(value = "/login")
