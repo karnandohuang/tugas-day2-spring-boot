@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+</head>
+<body>
+<div class="box">
+    <!--<div class="logo">-->
+    <!--</div>-->
+    <!--<div class="dashboard">-->
+        <!--This is dashboard-->
+    <!--</div>-->
+    <div class="add-form p-5 m-5">
+        <div>
+            <button type="button" class="btn btn-success" onclick="location.href='/admin/users/add'">Add User</button>
+            <button type="button" class="btn btn-danger">Delete User</button>
+        </div>
+        <div>
+            <h3 class="pt-4">User List</h3>
+            <table id="user-list" class="table table-responsive pt-1">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                </thead>
+                <tbody id="user-data">
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/show-user.js"></script>
+</body>
+</html>
